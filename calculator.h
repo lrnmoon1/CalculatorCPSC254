@@ -16,6 +16,7 @@ public:
     ~Calculator();
 
 private slots:
+    void on_button_0_clicked();
     void on_button_1_clicked();
     void on_button_2_clicked();
     void on_button_3_clicked();
@@ -29,6 +30,7 @@ private slots:
     void on_button_clear_clicked();
     void on_button_pos_neg_clicked();
     void on_button_plus_clicked();
+    void on_button_mutiply_clicked();
 
 private:
     void StartNewValue();
@@ -36,6 +38,7 @@ private:
 private:
     Ui::Calculator *ui;
     double value = 0;
+    double multiplyValue = 1;
     double secondValue = 0;
     double savedNumber = 0;
     bool startingNewValue = false;

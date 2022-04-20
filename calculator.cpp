@@ -15,6 +15,15 @@ Calculator::~Calculator()
     delete ui;
 }
 
+void Calculator::on_button_0_clicked()
+{
+    if (startingNewValue)
+        StartNewValue();
+
+    ui->results_display->insertPlainText("0");
+    value = ui->results_display->toPlainText().toDouble();
+}
+
 void Calculator::on_button_1_clicked()
 {
     if (startingNewValue)
@@ -119,6 +128,18 @@ void Calculator::on_button_plus_clicked()
 {
     savedNumber += value;
     value = savedNumber;
+
+    ui->results_display->clear();
+    ui->results_display->setAlignment(Qt::AlignRight);
+    ui->results_display->insertPlainText(QString::number(value));
+
+    startingNewValue = true;
+}
+
+void Calculator::on_button_mutiply_clicked()
+{
+    value *= multiplyValue;
+    multiplyValue = value;
 
     ui->results_display->clear();
     ui->results_display->setAlignment(Qt::AlignRight);
