@@ -136,10 +136,35 @@ void Calculator::on_button_plus_clicked()
     startingNewValue = true;
 }
 
+void Calculator::on_button_minus_clicked()
+ {
+     savedNumber -= value;
+     value = savedNumber;
+
+     ui->results_display->clear();
+     ui->results_display->setAlignment(Qt::AlignRight);
+     ui->results_display->insertPlainText(QString::number(value));
+
+     startingNewValue = true;
+ }
+
+
 void Calculator::on_button_mutiply_clicked()
 {
     value *= multiplyValue;
     multiplyValue = value;
+
+    ui->results_display->clear();
+    ui->results_display->setAlignment(Qt::AlignRight);
+    ui->results_display->insertPlainText(QString::number(value));
+
+    startingNewValue = true;
+}
+
+void Calculator::on_button_divide_clicked()
+{
+    value /= divideValue;
+    divideValue = value;
 
     ui->results_display->clear();
     ui->results_display->setAlignment(Qt::AlignRight);
