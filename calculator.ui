@@ -149,7 +149,7 @@
      </widget>
     </item>
     <item row="2" column="3">
-     <widget class="QPushButton" name="button_mutiply">
+     <widget class="QPushButton" name="button_multiply">
       <property name="sizePolicy">
        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
         <horstretch>0</horstretch>

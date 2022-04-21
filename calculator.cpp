@@ -17,98 +17,98 @@ Calculator::~Calculator()
 
 void Calculator::on_button_0_clicked()
 {
-    if (startingNewValue)
+    if (m_startingNewValue)
         StartNewValue();
 
     ui->results_display->insertPlainText("0");
-    value = ui->results_display->toPlainText().toDouble();
+    m_value = ui->results_display->toPlainText().toDouble();
 }
 
 void Calculator::on_button_1_clicked()
 {
-    if (startingNewValue)
+    if (m_startingNewValue)
         StartNewValue();
 
     ui->results_display->insertPlainText("1");
-    value = ui->results_display->toPlainText().toDouble();
+    m_value = ui->results_display->toPlainText().toDouble();
 }
 
 void Calculator::on_button_2_clicked()
 {
-    if (startingNewValue)
+    if (m_startingNewValue)
         StartNewValue();
 
     ui->results_display->insertPlainText("2");
-    value = ui->results_display->toPlainText().toDouble();
+    m_value = ui->results_display->toPlainText().toDouble();
 }
 
 void Calculator::on_button_3_clicked()
 {
-    if (startingNewValue)
+    if (m_startingNewValue)
         StartNewValue();
 
     ui->results_display->insertPlainText("3");
-    value = ui->results_display->toPlainText().toDouble();
+    m_value = ui->results_display->toPlainText().toDouble();
 }
 
 void Calculator::on_button_4_clicked()
 {
-    if (startingNewValue)
+    if (m_startingNewValue)
         StartNewValue();
 
     ui->results_display->insertPlainText("4");
-    value = ui->results_display->toPlainText().toDouble();
+    m_value = ui->results_display->toPlainText().toDouble();
 }
 
 void Calculator::on_button_5_clicked()
 {
-    if (startingNewValue)
+    if (m_startingNewValue)
         StartNewValue();
 
     ui->results_display->insertPlainText("5");
-    value = ui->results_display->toPlainText().toDouble();
+    m_value = ui->results_display->toPlainText().toDouble();
 }
 
 void Calculator::on_button_6_clicked()
 {
-    if (startingNewValue)
+    if (m_startingNewValue)
         StartNewValue();
 
     ui->results_display->insertPlainText("6");
-    value = ui->results_display->toPlainText().toDouble();
+    m_value = ui->results_display->toPlainText().toDouble();
 }
 
 void Calculator::on_button_7_clicked()
 {
-    if (startingNewValue)
+    if (m_startingNewValue)
         StartNewValue();
 
     ui->results_display->insertPlainText("7");
-    value = ui->results_display->toPlainText().toDouble();
+    m_value = ui->results_display->toPlainText().toDouble();
 }
 
 void Calculator::on_button_8_clicked()
 {
-    if (startingNewValue)
+    if (m_startingNewValue)
         StartNewValue();
 
     ui->results_display->insertPlainText("8");
-    value = ui->results_display->toPlainText().toDouble();
+    m_value = ui->results_display->toPlainText().toDouble();
 }
 
 void Calculator::on_button_9_clicked()
 {
-    if (startingNewValue)
+    if (m_startingNewValue)
         StartNewValue();
 
     ui->results_display->insertPlainText("9");
-    value = ui->results_display->toPlainText().toDouble();
+    m_value = ui->results_display->toPlainText().toDouble();
 }
 
 void Calculator::on_button_clear_clicked()
 {
-    value = 0;
-    savedNumber = 0;
+    m_value = 0;
+    m_savedNumber = 0;
 
     ui->results_display->clear();
     ui->results_display->setAlignment(Qt::AlignRight);
@@ -116,61 +116,82 @@ void Calculator::on_button_clear_clicked()
 
 void Calculator::on_button_pos_neg_clicked()
 {
-    value *= -1;
+    m_value *= -1;
 
     ui->results_display->clear();
     ui->results_display->setAlignment(Qt::AlignRight);
 
-    ui->results_display->insertPlainText(QString::number(value));
+    ui->results_display->insertPlainText(QString::number(m_value));
 }
 
 void Calculator::on_button_plus_clicked()
 {
-    savedNumber += value;
-    value = savedNumber;
-
-    ui->results_display->clear();
-    ui->results_display->setAlignment(Qt::AlignRight);
-    ui->results_display->insertPlainText(QString::number(value));
-
-    startingNewValue = true;
+    on_button_equals_clicked();
+    m_currentOperation = Operation::Add;
 }
 
 void Calculator::on_button_minus_clicked()
  {
-     savedNumber -= value;
-     value = savedNumber;
-
-     ui->results_display->clear();
-     ui->results_display->setAlignment(Qt::AlignRight);
-     ui->results_display->insertPlainText(QString::number(value));
-
-     startingNewValue = true;
+    on_button_equals_clicked();
+    m_currentOperation = Operation::Subtract;
  }
 
-
-void Calculator::on_button_mutiply_clicked()
+void Calculator::on_button_multiply_clicked()
 {
-    value *= multiplyValue;
-    multiplyValue = value;
-
-    ui->results_display->clear();
-    ui->results_display->setAlignment(Qt::AlignRight);
-    ui->results_display->insertPlainText(QString::number(value));
-
-    startingNewValue = true;
+    on_button_equals_clicked();
+    m_currentOperation = Operation::Multiply;
 }
 
 void Calculator::on_button_divide_clicked()
 {
-    value /= divideValue;
-    divideValue = value;
+    on_button_equals_clicked();
+    m_currentOperation = Operation::Divide;
+}
+
+void Calculator::on_button_equals_clicked()
+{
+    if (m_startingNewValue)
+        return;
+
+    switch (m_currentOperation)
+    {
+        case Operation::None:
+        {
+            m_savedNumber = m_value;
+            m_startingNewValue = true;
+            return;
+        }
+        case Operation::Add:
+        {
+            m_savedNumber += m_value;
+            m_value = m_savedNumber;
+            break;
+        }
+        case Operation::Subtract:
+        {
+            m_savedNumber -= m_value;
+            m_value = m_savedNumber;
+            break;
+        }
+        case Operation::Multiply:
+        {
+            m_savedNumber *= m_value;
+            m_value = m_savedNumber;
+            break;
+        }
+        case Operation::Divide:
+        {
+            m_savedNumber /= m_value;
+            m_value = m_savedNumber;
+            break;
+        }
+    }
 
     ui->results_display->clear();
     ui->results_display->setAlignment(Qt::AlignRight);
-    ui->results_display->insertPlainText(QString::number(value));
+    ui->results_display->insertPlainText(QString::number(m_value));
 
-    startingNewValue = true;
+    m_startingNewValue = true;
 }
 
 void Calculator::StartNewValue()
@@ -178,7 +199,7 @@ void Calculator::StartNewValue()
     ui->results_display->clear();
     ui->results_display->setAlignment(Qt::AlignRight);
 
-    value = 0;
-    startingNewValue = false;
+    m_value = 0;
+    m_startingNewValue = false;
 }
 

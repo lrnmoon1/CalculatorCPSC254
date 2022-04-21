@@ -15,6 +15,15 @@ public:
     Calculator(QWidget *parent = nullptr);
     ~Calculator();
 
+    enum Operation
+    {
+        None = 0,
+        Add = 1,
+        Subtract = 2,
+        Multiply = 3,
+        Divide = 4,
+    };
+
 private slots:
     void on_button_0_clicked();
     void on_button_1_clicked();
@@ -30,19 +39,22 @@ private slots:
     void on_button_clear_clicked();
     void on_button_pos_neg_clicked();
     void on_button_plus_clicked();
-    void on_button_minus_clicked()
-    void on_button_mutiply_clicked();
+    void on_button_minus_clicked();
+    void on_button_multiply_clicked();
+    void on_button_divide_clicked();
+    void on_button_equals_clicked();
 
 private:
     void StartNewValue();
 
 private:
     Ui::Calculator *ui;
-    double value = 0;
-    double multiplyValue = 1;
-    double divideValue = 1;
-    double secondValue = 0;
-    double savedNumber = 0;
-    bool startingNewValue = false;
+    double m_value = 0;
+    double m_savedNumber = 0;
+    bool m_startingNewValue = false;
+
+    Operation m_currentOperation = Operation::None;
+
+
 };
 #endif // CALCULATOR_H
