@@ -247,6 +247,8 @@ void Calculator::on_button_equals_clicked()
         }
         case Operation::Factorial:
         {
+            m_savedNumber = CalcFactorial();
+            m_value = m_savedNumber;
             break;
         }
         case Operation::Sin:
@@ -301,4 +303,17 @@ void Calculator::StartNewValue()
 
     m_value = 0;
     m_startingNewValue = false;
+}
+
+int Calculator::CalcFactorial()
+{
+    int fact = 1;
+
+    if (m_value == 0)
+        return fact;
+
+    for (int i = 1; i <= m_value; i++)
+        fact = fact * i;
+
+    return fact;
 }

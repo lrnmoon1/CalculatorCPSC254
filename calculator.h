@@ -63,6 +63,7 @@ private slots:
 
 private:
     void StartNewValue();
+    int CalcFactorial();
 
 private:
     Ui::Calculator *ui;
