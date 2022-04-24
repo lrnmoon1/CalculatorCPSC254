@@ -110,6 +110,8 @@ void Calculator::on_button_clear_clicked()
     m_value = 0;
     m_savedNumber = 0;
 
+    m_currentOperation = Operation::None;
+
     ui->results_display->clear();
     ui->results_display->setAlignment(Qt::AlignRight);
 }
