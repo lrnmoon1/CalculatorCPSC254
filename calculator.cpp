@@ -1,5 +1,6 @@
 #include "calculator.h"
 #include "./ui_calculator.h"
+#include <QtMath>
 
 Calculator::Calculator(QWidget *parent)
     : QMainWindow(parent)
@@ -150,6 +151,63 @@ void Calculator::on_button_divide_clicked()
     m_currentOperation = Operation::Divide;
 }
 
+void Calculator::on_button_sin_clicked()
+{
+    m_currentOperation = Operation::Sin;
+    on_button_equals_clicked();
+}
+
+void Calculator::on_button_cos_clicked()
+{
+    m_currentOperation = Operation::Cos;
+    on_button_equals_clicked();
+}
+
+void Calculator::on_button_tan_clicked()
+{
+    m_currentOperation = Operation::Tan;
+    on_button_equals_clicked();
+}
+
+void Calculator::on_button_derivatives_clicked()
+{
+
+}
+
+void Calculator::on_button_integral_clicked()
+{
+
+}
+
+void Calculator::on_button_factorial_clicked()
+{
+    m_currentOperation = Operation::Factorial;
+    on_button_equals_clicked();
+}
+
+void Calculator::on_button_sqroot_clicked()
+{
+    m_currentOperation = Operation::Sqrt;
+    on_button_equals_clicked();
+}
+
+void Calculator::on_button_x_y_power_clicked()
+{
+    on_button_equals_clicked();
+    m_currentOperation = Operation::Power;
+}
+
+void Calculator::on_button_xsquared_clicked()
+{
+    m_currentOperation = Operation::Sqrd;
+    on_button_equals_clicked();
+}
+
+void Calculator::on_button_x_clicked()
+{
+
+}
+
 void Calculator::on_button_equals_clicked()
 {
     if (m_startingNewValue)
@@ -187,6 +245,46 @@ void Calculator::on_button_equals_clicked()
             m_value = m_savedNumber;
             break;
         }
+        case Operation::Factorial:
+        {
+            break;
+        }
+        case Operation::Sin:
+        {
+            m_savedNumber = qSin(qreal(m_value));
+            m_value = m_savedNumber;
+            break;
+        }
+        case Operation::Cos:
+        {
+            m_savedNumber = qCos(qreal(m_value));
+            m_value = m_savedNumber;
+            break;
+        }
+        case Operation::Tan:
+        {
+            m_savedNumber = qTan(qreal(m_value));
+            m_value = m_savedNumber;
+            break;
+        }
+        case Operation::Sqrt:
+        {
+            m_savedNumber = qSqrt(m_value);
+            m_value = m_savedNumber;
+            break;
+        }
+        case Operation::Sqrd:
+        {
+            m_savedNumber = m_value * m_value;
+            m_value = m_savedNumber;
+            break;
+        }
+        case Operation::Power:
+        {
+            m_savedNumber = qPow(m_savedNumber, m_value);
+            m_value = m_savedNumber;
+            break;
+        }
     }
 
     ui->results_display->clear();
@@ -204,4 +302,3 @@ void Calculator::StartNewValue()
     m_value = 0;
     m_startingNewValue = false;
 }
-

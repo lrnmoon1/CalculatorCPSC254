@@ -22,6 +22,13 @@ public:
         Subtract = 2,
         Multiply = 3,
         Divide = 4,
+        Factorial = 5,
+        Sin = 6,
+        Cos = 7,
+        Tan = 8,
+        Sqrt = 9,
+        Sqrd = 10,
+        Power = 11,
     };
 
 private slots:
@@ -42,6 +49,16 @@ private slots:
     void on_button_minus_clicked();
     void on_button_multiply_clicked();
     void on_button_divide_clicked();
+    void on_button_sin_clicked();
+    void on_button_cos_clicked();
+    void on_button_tan_clicked();
+    void on_button_derivatives_clicked();
+    void on_button_integral_clicked();
+    void on_button_factorial_clicked();
+    void on_button_sqroot_clicked();
+    void on_button_x_y_power_clicked();
+    void on_button_xsquared_clicked();
+    void on_button_x_clicked();
     void on_button_equals_clicked();
 
 private:
