@@ -29,6 +29,9 @@ public:
         Sqrt = 9,
         Sqrd = 10,
         Power = 11,
+        Derivative = 12,
+        Integral = 13,
+
     };
 
 private slots:
@@ -64,6 +67,8 @@ private slots:
 private:
     void StartNewValue();
     int CalcFactorial();
+    int calcDerivative();
+    int calcIntegral();
 
 private:
     Ui::Calculator *ui;

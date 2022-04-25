@@ -171,12 +171,14 @@ void Calculator::on_button_tan_clicked()
 
 void Calculator::on_button_derivatives_clicked()
 {
-
+    m_currentOperation = Operation::Derivative;
+    on_button_equals_clicked();
 }
 
 void Calculator::on_button_integral_clicked()
 {
-
+    m_currentOperation = Operation::Integral;
+    on_button_equals_clicked();
 }
 
 void Calculator::on_button_factorial_clicked()
@@ -193,19 +195,26 @@ void Calculator::on_button_sqroot_clicked()
 
 void Calculator::on_button_x_y_power_clicked()
 {
+    ui->results_display->insertPlainText("^");
     on_button_equals_clicked();
     m_currentOperation = Operation::Power;
 }
 
 void Calculator::on_button_xsquared_clicked()
 {
+    ui->results_display->insertPlainText("^2");
     m_currentOperation = Operation::Sqrd;
-    on_button_equals_clicked();
+   //on_button_equals_clicked();
+
 }
 
 void Calculator::on_button_x_clicked()
 {
+    if (m_startingNewValue)
+        StartNewValue();
 
+    ui->results_display->insertPlainText("x");
+    m_value = ui->results_display->toPlainText().toDouble();
 }
 
 void Calculator::on_button_equals_clicked()
@@ -287,6 +296,18 @@ void Calculator::on_button_equals_clicked()
             m_value = m_savedNumber;
             break;
         }
+        case Operation::Derivative:
+        {
+            m_savedNumber = calcDerivative();
+            m_value = m_savedNumber;
+            break;
+        }
+        case Operation::Integral:
+        {
+            m_savedNumber = calcIntegral();
+            m_value = m_savedNumber;
+            break;
+        }
     }
 
     ui->results_display->clear();
@@ -316,4 +337,20 @@ int Calculator::CalcFactorial()
         fact = fact * i;
 
     return fact;
+}
+int Calculator::calcDerivative()
+{
+    int tmp = 0;
+
+    if (m_value != std::stoi("x"))
+        return tmp;
+
+    return tmp;
+}
+int Calculator::calcIntegral()
+{
+
+    int tmp = std::stoi("x");
+    int i = 0;
+        return (tmp^(i+1))/ (i+1);
 }
