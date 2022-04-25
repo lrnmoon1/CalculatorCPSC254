@@ -61,6 +61,8 @@ private slots:
     void on_button_x_clicked();
     void on_button_equals_clicked();
 
+    void on_button_decimal_clicked();
+
 private:
     void StartNewValue();
     int CalcFactorial();

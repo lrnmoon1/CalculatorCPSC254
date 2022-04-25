@@ -106,6 +106,11 @@ void Calculator::on_button_9_clicked()
     m_value = ui->results_display->toPlainText().toDouble();
 }
 
+void Calculator::on_button_decimal_clicked()
+{
+    ui->results_display->insertPlainText(".");
+}
+
 void Calculator::on_button_clear_clicked()
 {
     m_value = 0;
@@ -317,3 +322,4 @@ int Calculator::CalcFactorial()
 
     return fact;
 }
+
