@@ -43,12 +43,15 @@ private slots:
     void on_button_8_clicked();
     void on_button_9_clicked();
 
+    void on_button_decimal_clicked();
+
     void on_button_clear_clicked();
     void on_button_pos_neg_clicked();
     void on_button_plus_clicked();
     void on_button_minus_clicked();
     void on_button_multiply_clicked();
     void on_button_divide_clicked();
+
     void on_button_sin_clicked();
     void on_button_cos_clicked();
     void on_button_tan_clicked();
@@ -59,9 +62,8 @@ private slots:
     void on_button_x_y_power_clicked();
     void on_button_xsquared_clicked();
     void on_button_x_clicked();
-    void on_button_equals_clicked();
 
-    void on_button_decimal_clicked();
+    void on_button_equals_clicked();
 
 private:
     void StartNewValue();

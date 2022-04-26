@@ -322,4 +322,3 @@ int Calculator::CalcFactorial()
 
     return fact;
 }
-
