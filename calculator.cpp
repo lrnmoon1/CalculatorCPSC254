@@ -1,6 +1,7 @@
 #include "calculator.h"
 #include "./ui_calculator.h"
 #include <QtMath>
+#include <iostream>
 
 Calculator::Calculator(QWidget *parent)
     : QMainWindow(parent)
@@ -171,14 +172,40 @@ void Calculator::on_button_tan_clicked()
 
 void Calculator::on_button_derivatives_clicked()
 {
-    m_currentOperation = Operation::Derivative;
-    on_button_equals_clicked();
+    if(!m_startingNewValue)
+    {
+        SavePolynomial();
+        m_currentOperation = Operation::Derivative;
+    }
+    else
+    {
+        calcDerivative();
+    }
+
+}
+void Calculator::SavePolynomial()
+{
+    std::string polynomial = ui->results_display->toPlainText().toStdString();
+    m_polynomial = std::stoi(polynomial);
+    ui->results_display->clear();
+    ui->results_display->setAlignment(Qt::AlignRight);
+    m_exponent = std::stoi(polynomial);
+
+
 }
 
 void Calculator::on_button_integral_clicked()
 {
-    m_currentOperation = Operation::Integral;
-    on_button_equals_clicked();
+    if(!m_startingNewValue)
+    {
+        SavePolynomial();
+        m_currentOperation = Operation::Integral;
+    }
+    else
+    {
+        calcIntegral();
+    }
+
 }
 
 void Calculator::on_button_factorial_clicked()
@@ -196,16 +223,21 @@ void Calculator::on_button_sqroot_clicked()
 void Calculator::on_button_x_y_power_clicked()
 {
     ui->results_display->insertPlainText("^");
-    on_button_equals_clicked();
-    m_currentOperation = Operation::Power;
+    if(!ui->results_display->toPlainText().contains("x"))
+    {
+        on_button_equals_clicked();
+        m_currentOperation = Operation::Power;
+    }
 }
 
 void Calculator::on_button_xsquared_clicked()
 {
     ui->results_display->insertPlainText("^2");
-    m_currentOperation = Operation::Sqrd;
-   //on_button_equals_clicked();
-
+    if(!ui->results_display->toPlainText().contains("x"))
+    {
+        on_button_equals_clicked();
+        m_currentOperation = Operation::Sqrd;
+    }
 }
 
 void Calculator::on_button_x_clicked()
@@ -338,19 +370,28 @@ int Calculator::CalcFactorial()
 
     return fact;
 }
-int Calculator::calcDerivative()
-{
-    int tmp = 0;
-
-    if (m_value != std::stoi("x"))
-        return tmp;
-
-    return tmp;
-}
-int Calculator::calcIntegral()
+double Calculator::calcDerivative() // need to store user input of constant and exponent in an array?
 {
 
-    int tmp = std::stoi("x");
-    int i = 0;
-        return (tmp^(i+1))/ (i+1);
+    double coefficient = m_polynomial;
+    double exponent = m_exponent;
+
+    m_value = ui->results_display->toPlainText().toDouble();
+    double answer = (coefficient*m_exponent)*pow(m_value, m_exponent-1);
+
+    return answer;
+
 }
+double Calculator::calcIntegral()
+{
+
+    double coefficient = m_polynomial;
+    double exponent = m_exponent;
+
+    m_value = ui->results_display->toPlainText().toDouble();
+    double answer = (coefficient/(m_exponent+1))*pow(m_value, m_exponent+1);
+
+    return answer;
+
+}
+

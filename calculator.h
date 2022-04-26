@@ -63,17 +63,22 @@ private slots:
     void on_button_xsquared_clicked();
     void on_button_x_clicked();
     void on_button_equals_clicked();
+    void SavePolynomial();
 
 private:
     void StartNewValue();
     int CalcFactorial();
-    int calcDerivative();
-    int calcIntegral();
+    double calcDerivative();
+    double calcIntegral();
+    int userInput();
+
 
 private:
     Ui::Calculator *ui;
     double m_value = 0;
     double m_savedNumber = 0;
+    double m_polynomial = 0;
+    double m_exponent = 0;
     bool m_startingNewValue = false;
 
     Operation m_currentOperation = Operation::None;
