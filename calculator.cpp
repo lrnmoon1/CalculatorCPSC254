@@ -1,18 +1,18 @@
 /*
 Author Information:
-Group Name: Group Project - Stanley Chong, Lauren Moon
-Name:       Lauren Moon, Stanley Chong
-Email:      lrn.moon1@csu.fullerton.edu, stanley54073@csu.fullerton.edu
+ Group Name: Group Project - Stanley Chong, Lauren Moon
+ Name:       Lauren Moon, Stanley Chong
+ Email:      lrn.moon1@csu.fullerton.edu, stanley54073@csu.fullerton.edu
 
-This program is free software: you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free Software
-Foundation, either version 3 of the License, or (at your option) any later
-version.This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-details.You should have received a copy of the GNU General Public License
-along with this program. If not, see <https://www.gnu.org/licenses/>.
-*/
+ This program is free software: you can redistribute it and/or modify it under
+ the terms of the GNU General Public License as published by the Free Software
+ Foundation, either version 3 of the License, or (at your option) any later
+ version.This program is distributed in the hope that it will be useful, but
+ WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ details.You should have received a copy of the GNU General Public License
+ along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
 
 #include "calculator.h"
 #include "./ui_calculator.h"
@@ -192,7 +192,15 @@ void Calculator::on_button_tan_clicked()
 
 void Calculator::on_button_derivatives_clicked()
 {
-
+    if (!m_startingDerivative)
+    {
+        SavePolynomial();
+        m_currentOperation = Operation::Derivative;
+    }
+    else
+    {
+        on_button_equals_clicked();
+    }
 }
 
 void Calculator::on_button_integral_clicked()
@@ -214,8 +222,13 @@ void Calculator::on_button_sqroot_clicked()
 
 void Calculator::on_button_x_y_power_clicked()
 {
-    on_button_equals_clicked();
-    m_currentOperation = Operation::Power;
+    ui->results_display->insertPlainText("^");
+
+    if (!ui->results_display->toPlainText().contains("x"))
+    {
+        on_button_equals_clicked();
+        m_currentOperation = Operation::Power;
+    }
 }
 
 void Calculator::on_button_xsquared_clicked()
@@ -226,7 +239,7 @@ void Calculator::on_button_xsquared_clicked()
 
 void Calculator::on_button_x_clicked()
 {
-
+    ui->results_display->insertPlainText("x");
 }
 
 void Calculator::on_button_equals_clicked()
@@ -308,6 +321,11 @@ void Calculator::on_button_equals_clicked()
             m_value = m_savedNumber;
             break;
         }
+        case Operation::Derivative:
+        {
+            CalculateDerivative();
+            break;
+        }
     }
 
     ui->results_display->clear();
@@ -339,3 +357,23 @@ int Calculator::CalcFactorial()
     return fact;
 }
 
+void Calculator::SavePolynomial()
+{
+    m_polynomial = ui->results_display->toPlainText().toStdString();
+    m_startingDerivative = true;
+    m_startingNewValue = true;
+}
+
+void Calculator::CalculateDerivative()
+{
+    std::string delimiter = "x^";
+
+    size_t pos = 0;
+    pos = m_polynomial.find(delimiter);
+    double coefficient = std::stod(m_polynomial.substr(0, pos));
+    double exponent = std::stod(m_polynomial.substr(pos + 2, m_polynomial.length()-1));
+
+    m_savedNumber = (coefficient*exponent)*pow(m_value, exponent-1);
+    m_value = m_savedNumber;
+    m_startingDerivative = false;
+}
